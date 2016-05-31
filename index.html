@@ -1,0 +1,155 @@
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+
+    <!-- Website Title -->
+    <title>Music Streaming Page</title>
+
+    <!--CSS Link-->
+    <link rel="stylesheet" href="style/style.css" type="text/css" />
+
+    <!--According to https://developers.google.com/speed/docs/insights/ConfigureViewport, this allows for good scaling
+        on mobile phones-->
+    <meta name=viewport content="width=device-width, initial-scale=1">
+
+    <!--Added the PHP execution methods for the python web scraping scripts-->
+    
+    <!--Execute web scraper script-->
+    <?php 
+
+    $command = escapeshellcmd('/adamskoog/Documents/webscraper.py');
+    $shell_exec($command);
+    
+    ?>
+    
+    <!--- Testing parsing JSON with Javascript
+    <!--- May turn to using JQuery and AJAX, reference link to making this happen:
+            http://api.jquery.com/jquery.getjson/
+    -->
+    
+    
+    <!--- ****NOTE**** The parsing and exrtacting data from the JSON file with Javascript
+    is not fully functional yet. Been researching into JQuery and AJAX to use for this step-->
+    
+    <div id="item"></div>
+
+    
+    <!-- Added JQuery and AJAX to perform JSON parsing as well, trying alternative methods.
+        Still need to look more into AJAX and JQuery, but this will probably be the prefferred method-->
+    
+    <!---<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+       $.ajax({
+          dataType: "json",
+          url: url,
+          data: data,
+          success: success
+        });
+        
+        $.getJSON( "news.json", function( data ) {
+                      var items = [];
+                      $.each( data, function( key, val ) {
+                        items.push( "<li id='" + key + "'>" + val + "</li>" );
+                      });
+                     
+                      $( "<ul/>", {
+                        "class": "news-list",
+                        html: items.join( "" )
+                      }).appendTo( "body" );
+                    });
+        
+    </script>--->
+	
+	
+	
+
+</head>
+
+<!--- This section still needs to be heavily edited and be accompanied by CSS
+     The news section will be edited out when the JQuery and AJAX extraction of a JSON file
+     is completed.
+
+-->
+
+<body>
+   
+    <div id="container">
+	
+	
+		<div id="topBar">
+			
+			
+			<div id="logodiv">
+				
+				<img src="images/logo.png"/>
+			</div>
+			
+			<div id="signindiv">
+				<p><img src=""/> Sign In</p>
+			</div>
+			
+			<div id="topmenudiv">
+				
+				<div class="dropdown">
+					  <button class="dropbtn">News</button>
+					  <div class="dropdown-content">
+						<a id ="top-rated-articles" class="nav-link" href="#">Top Rated</a>
+						<a id ="news-archives" class="nav-link" href="#">Archives</a>
+					  </div>
+				</div>
+				<div class="dropdown">
+					  <button class="dropbtn">Media</button>
+					  <div class="dropdown-content">
+						<a id ="calender" class="nav-link" href="#">Calendar</a>
+						<a id ="playlist" class="nav-link" href="#">Playlist</a>
+					  </div>
+				</div>
+			</div>
+			
+			<div id="searchdiv">
+				<input type="text" placeholder="Search"/>
+			</div>
+			
+		</div>
+	</div>
+
+    <div id="content">
+
+		
+	
+        <!-- Sample Music News article -->
+        <section id="music-news">
+            <h1>Music News Feed</h1>
+	
+            <!-- Sample Kanye article, although the articles will need to be created dynamically by pulling information from either
+                MongoDB or a JSON file. That information would be gathered by our web scraper
+                 -->
+			<?php
+				
+				$file = fopen("rollingstonenews.csv","r");
+
+				while(! feof($file))
+				  {
+					print_r(fgetcsv($file));
+				  }
+
+				fclose($file);
+			?>
+			
+
+           
+        </section>
+
+
+    </div>
+
+    <footer>
+
+        
+        <p>
+            Created by Adam Skoog, Joey Quaranta and Jacob Krahling
+        </p>
+    </footer>
+</body>
+</html>
